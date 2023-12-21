@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Проекты</title>
+</head>
+<body>
+    <h1>Список проектов</h1>
+    <table border="1">
+        <thead>
+        <tr>
+            <th>Название проекта</th>
+            <th>Email</th>
+            <th>Кол-во чел</th>
+            <th>Подробнее</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for project in projects %}
+            <tr>
+                <td>{{ project.title }}</td>
+                <td>{{ project.email }}</td>
+                <td>{{ project.countUser }}</td>
+                <td><a href="">Подробнее</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
