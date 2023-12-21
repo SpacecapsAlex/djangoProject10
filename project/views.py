@@ -1,6 +1,6 @@
 from django.http import HttpResponse, HttpRequest, HttpResponseRedirect
 from django.shortcuts import render
-from .forms import ProjectCreateForm
+from .forms import ProjectCreateForm, ProjectFilterForm
 
 from .models import Project
 
@@ -10,10 +10,11 @@ from .models import Project
 
 def get_projects(request: HttpRequest) -> HttpResponse:
     projects = Project.objects.all()
+    filter_form = ProjectFilterForm()
     return render(
         request,
         'project/GetAllProjects.html',
-        {'projects': projects}
+        {'projects': projects, 'filter': filter_form}
     )
 
 
@@ -45,3 +46,18 @@ def delete_project(request: HttpRequest, project_id: int) -> HttpResponse:
     project.delete()
     # переход по ссылке на страницу(/project/) - глобальный url
     return HttpResponseRedirect("/project/")
+
+
+def filter_projects(request: HttpRequest) -> HttpResponse:
+    form = ProjectFilterForm(request.POST)
+    if form.is_valid():
+        title = form.cleaned_data['title']
+        countUser = form.cleaned_data['countUser']
+        projects = (Project.objects
+                    .filter(title=title)
+                    .filter(countUser=countUser))
+        return render(
+            request,
+            'project/GetAllProjects.html',
+            {'projects': projects, 'filter': form}
+        )

@@ -6,11 +6,18 @@
 </head>
 <body>
     <h1>Список проектов</h1>
+    <h2>Фильтр</h2>
+    <form method="post" action="/project/filter/">
+        {% csrf_token %}
+        {{ filter }}
+        <input type="submit" value="Фильтр">
+    </form>
     <!-- отправка GET запроса к методу create_project -->
-    <a href="create/">Create</a>
+    <a href="/project/create/">Create</a>
     <table border="1">
         <thead>
         <tr>
+            <th>ID</th>
             <th>Название проекта</th>
             <th>Email</th>
             <th>Кол-во чел</th>
@@ -21,11 +28,12 @@
         <tbody>
         {% for project in projects %}
             <tr>
+                <td>{{ project.id }}</td>
                 <td>{{ project.title }}</td>
                 <td>{{ project.email }}</td>
                 <td>{{ project.countUser }}</td>
                 <td><a href="">Подробнее</a></td>
-                <td><a href="delete/{{ project.id }}">Удалить</a></td>
+                <td><a href="/project/delete/{{ project.id }}">Удалить</a></td>
             </tr>
         {% endfor %}
         </tbody>
