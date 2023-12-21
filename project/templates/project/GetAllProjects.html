@@ -6,6 +6,8 @@
 </head>
 <body>
     <h1>Список проектов</h1>
+    <!-- отправка GET запроса к методу create_project -->
+    <a href="create/">Create</a>
     <table border="1">
         <thead>
         <tr>
@@ -13,6 +15,7 @@
             <th>Email</th>
             <th>Кол-во чел</th>
             <th>Подробнее</th>
+            <th>Удалить</th>
         </tr>
         </thead>
         <tbody>
@@ -22,6 +25,7 @@
                 <td>{{ project.email }}</td>
                 <td>{{ project.countUser }}</td>
                 <td><a href="">Подробнее</a></td>
+                <td><a href="delete/{{ project.id }}">Удалить</a></td>
             </tr>
         {% endfor %}
         </tbody>

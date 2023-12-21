@@ -38,3 +38,10 @@ def create_project(request: HttpRequest) -> HttpResponse:
         'project/CreateProject.html',
         {'form': form}
     )
+
+
+def delete_project(request: HttpRequest, project_id: int) -> HttpResponse:
+    project = Project.objects.get(id=project_id)
+    project.delete()
+    # переход по ссылке на страницу(/project/) - глобальный url
+    return HttpResponseRedirect("/project/")
