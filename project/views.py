@@ -2,13 +2,14 @@ from django.http import HttpResponse, HttpRequest, HttpResponseRedirect
 from django.shortcuts import render
 from .forms import ProjectCreateForm, ProjectFilterForm, ProjectUpdateForm
 
-from .models import Project
+from .models import Project, User
 
 
 # Create your views here.
 
 
 def get_projects(request: HttpRequest) -> HttpResponse:
+    # user.project.title
     projects = Project.objects.all()
     filter_form = ProjectFilterForm()
     return render(
@@ -16,7 +17,6 @@ def get_projects(request: HttpRequest) -> HttpResponse:
         'project/GetAllProjects.html',
         {'projects': projects, 'filter': filter_form}
     )
-
 
 def create_project(request: HttpRequest) -> HttpResponse:
     # Получание заполненой формы
