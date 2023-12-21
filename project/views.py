@@ -1,6 +1,6 @@
 from django.http import HttpResponse, HttpRequest, HttpResponseRedirect
 from django.shortcuts import render
-from .forms import ProjectCreateForm, ProjectFilterForm
+from .forms import ProjectCreateForm, ProjectFilterForm, ProjectUpdateForm
 
 from .models import Project
 
@@ -61,3 +61,24 @@ def filter_projects(request: HttpRequest) -> HttpResponse:
             'project/GetAllProjects.html',
             {'projects': projects, 'filter': form}
         )
+
+
+def update_project(request: HttpRequest, project_id: int) -> HttpResponse:
+    project = Project.objects.get(id=project_id)
+    if request.method == 'POST':
+        form = ProjectUpdateForm(request.POST)
+        if form.is_valid():
+            project.title = form.cleaned_data['title']
+            project.email = form.cleaned_data['email']
+            project.save()
+
+            return HttpResponseRedirect("/project/")
+    else:
+        form = ProjectUpdateForm()
+        form.fields['title'].initial = project.title
+        form.fields['email'].initial = project.email
+    return render(
+        request,
+        'project/UpdateProject.html',
+        {'form': form}
+    )

@@ -11,3 +11,8 @@ class ProjectCreateForm(forms.Form):
 class ProjectFilterForm(forms.Form):
     title = forms.CharField(max_length=100)
     countUser = forms.IntegerField()
+
+
+class ProjectUpdateForm(forms.Form):
+    title = forms.CharField(max_length=100)
+    email = forms.EmailField(max_length=254)
